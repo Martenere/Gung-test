@@ -1,0 +1,40 @@
+.product-view {
+  flex: 1;
+
+}
+
+.category {
+    
+    color: green;
+    background-color: beige;
+  }
+  
+  .subcategory-1 {
+    color: red;
+    background-color: blanchedalmond
+    
+  }
+
+  .subcategory-2 {
+    color: blue;
+    background-color: gainsboro
+  }
+
+.categoryTitle{
+    width: 100%;
+}
+
+.title-wrapper {
+    display: flex;
+}
+.product-wrapper {
+    display: flex;
+}
+
+.category .card, 
+.subcategory-1 .card, 
+.subcategory-2 .card {
+  --bs-card-spacer-x: 0;
+}
+  
+  

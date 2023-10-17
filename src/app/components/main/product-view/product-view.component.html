@@ -1,0 +1,54 @@
+
+<div class="product-view">
+    <ng-container *ngIf="category; else noItem">
+    
+            <ng-container *ngTemplateOutlet="categoryTemplate; context: { $implicit: category, depth: 0 }"></ng-container>
+
+            <!--Nesting accordion-->
+
+    </ng-container>
+
+    <ng-template #noItem>
+        Loading
+    </ng-template>
+</div>
+
+
+<ng-template #categoryTemplate let-category let-depth="depth">
+    <div *ngIf="category?.id.startsWith('s')"  
+        [ngClass]="{
+            'category': depth === 0, 
+            'subcategory-1': depth === 1, 
+            'subcategory-2': depth === 2
+        }"
+    >
+        <div class="card">
+
+            <div class="card-header" id="heading-{{category.id}}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + category.id" (click)="logAccordionToggle(category.id)">
+                        {{ category?.name }} -- {{category?.children[0].id.startsWith('s')}}
+                    </button>
+               
+                </h5>
+            </div>
+            
+            <div id="collapse-{{category.id}}" class="collapse show" [attr.data-bs-parent]="'collapse-parent' + category.id"  (shown.bs.collapse)="onShown()" (hidden.bs.collapse)="onHidden()">
+                <div class=" card-body">
+                    
+                    <div [ngClass]="{'product-wrapper': !category?.children[0].id.startsWith('s')}">
+                        <div *ngFor="let child of category?.children">
+                            <ng-container *ngTemplateOutlet="categoryTemplate; context: { $implicit: child, depth: depth+1 }"></ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <div *ngIf="!category?.id.startsWith('s')">
+        <app-product-item [categoryItem]="category!"></app-product-item>
+    </div>
+</ng-template>
