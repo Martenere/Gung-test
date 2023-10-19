@@ -12,7 +12,9 @@ export class CategoryService {
     // to connect to one.
     this.categories = JSON.parse(
       '{"id": "sROT","name": "Produktsida","children": [{"id": "s04","name": "Slang & Kabelupprullare","children": [{"id": "s0405","name": "Avfettning","children": [{	"id": "AV300-1006",	"name": "Slangupprullare Avfettning 10m",	"children": []},{	"id": "AV450-1006",	"name": "Slanguppr. avfettning 10m 2",	"children": []},{	"id": "AV430-1506",	"name": "Slangupprullare Avfettning 15m",	"children": []}]}, {"id": "s0406","name": "Avspärrning","children": [{	"id": "VXL-10WK",	"name": "Upprullare för avspärrning 10 m",	"children": []},{	"id": "VXL-15WK",	"name": "Upprullare för avspärrning 15 m",	"children": []},{	"id": "VXL-20WK",	"name": "Upprullare för avspärrning 20 m",	"children": []}]}, {"id": "s0407","name": "Butan/Propan","children": [{	"id": "8430-802",	"name": "Slanguppr. för Butan & Propan med 20m",	"children": []},{	"id": "8430-804",	"name": "Slanguppr. för Butan & Propan med 18m",	"children": []}]}]}]}'
-    );
+      //'{"id": "sROT","name": "Produktsida","children": [{"id": "s04","name": "Slang & Kabelupprullare","children": [{"id": "s0405","name": "Avfettning","children": [{"id": "AV300-1006","name": "Slangupprullare Avfettning 10m","children": []},{"id": "AV450-1006","name": "Slanguppr. avfettning 10m 2","children": []},{"id": "AV430-1506","name": "Slangupprullare Avfettning 15m","children": []},{"id": "s040501","name": "New Subcategory","children": [{"id": "P01","name": "Product 1","children": []},{"id": "P02","name": "Product 2","children": []}]}]},{"id": "s0406","name": "Avspärrning","children": []},{"id": "s0407","name": "Butan/Propan","children": []}]}]}'
+    
+      );
   }
 
   /***

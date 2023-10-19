@@ -1,8 +1,10 @@
-
 <div class="screen">
-<div class="filterpanel">
-    <app-filter></app-filter>
-</div>
-
-<app-product-view></app-product-view>
+    <div class="filterpanel">
+        <app-filter></app-filter>
+    </div>
+    <div class="main-view">
+        <app-sort-header></app-sort-header>
+        <app-sort-view *ngIf="viewMode === 'sort'" ></app-sort-view>
+        <app-category-view *ngIf="viewMode === 'category'"></app-category-view>
+    </div>
 </div>

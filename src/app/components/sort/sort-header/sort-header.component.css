@@ -1,0 +1,10 @@
+.container {
+    flex:1; /* This will make the container take the full height of the viewport */
+}
+
+.btn-group {
+    margin: 0 auto; /* This will center the button group horizontally */
+}
+.button {
+    margin-left: 2rem;
+}

@@ -1,0 +1,71 @@
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif; /* Modern, clean font */
+  background-color: #f9f9f9; /* Light grey background */
+}
+
+.product-view {
+  flex: 1;
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Category and Subcategory Styling */
+.category, .subcategory-1, .subcategory-2 {
+  margin-bottom: 10px;
+  border-radius: 4px; /* Slightly rounded corners */
+  border: none !important;
+}
+
+/* Card Styling */
+.card {
+ 
+  margin: 10px 0; /* Space between cards */
+  border-radius: 4px; /* Rounded corners for cards */
+}
+
+.card-header {
+  background-color: #658db7; /* Blue header */
+  color: #ffffff; /* White text */
+  padding: 10px 15px; /* Padding for header */
+}
+
+.card-body {
+   margin-left: 0.4rem;
+   border: none !
+}
+
+/* Button Styling */
+.btn {
+  color: #ffffff; /* White text for button */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Bold text */
+}
+
+/* Product Wrapper */
+.product-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of items */
+}
+
+/* Title Wrapper */
+.title-wrapper {
+  display: flex;
+}
+
+.categoryTitle {
+  width: 100%;
+  font-weight: bold; /* Bold title */
+  margin-bottom: 10px; /* Space below title */
+}
+
+.category .card, 
+.subcategory-1 .card, 
+.subcategory-2 .card {
+  --bs-card-spacer-x: 0;
+  border: none !important; /* Remove borders */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+  
+  

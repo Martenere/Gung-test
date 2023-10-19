@@ -2,18 +2,22 @@
     display: flex;
     width: 100vw;
     height: 100vh;
+    flex-direction: row;
 }
 
 .filterpanel {
     width: 15rem;
     background-color: #CFCABF
 }
+.main-view{
+    flex: 1;
+}
 
 app-product-view {
-    flex: 1; /* This will make it take up all available space after filterpanel width */
-    height: 100%; /* Take full height of the parent */
+    flex: 1; 
+    height: 100%/* This will make it take up all available space after filterpanel width */
 }
 
 .screen, .filterpanel, app-product-view {
-    overflow: hidden; /* Or overflow-y: hidden; if you only want to hide vertical overflow */
+     /* Or overflow-y: hidden; if you only want to hide vertical overflow */
 }

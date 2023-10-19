@@ -1,10 +1,22 @@
-<div>
-
-    <label>
-      Min Price:
-      <input type="number" [(ngModel)]="minPrice" />
-    </label>
-
-    <button (click)="applyFilter()">Apply</button>
-<app-is-available></app-is-available>
+<div class="filter-container">
+  <div class="filter-header">
+    <p class="h2">Filter Products</p>
   </div>
+
+  <app-text-entry-field [targetOfData]="'ID filter'" [setFilterFunction]="setCriteriaFilterId"></app-text-entry-field>
+  <hr class="divider"/>  <!-- Divider -->
+
+  <app-text-entry-field [targetOfData]="'Name filter'" [setFilterFunction]="setCriteriaFilterName"></app-text-entry-field>
+  <hr class="divider"/>  <!-- Divider -->
+
+  <app-range></app-range>
+  <hr class="divider"/>  <!-- Divider -->
+
+  <app-is-available></app-is-available>
+  <hr class="divider"/>  <!-- Divider -->
+
+  <app-range-upper-lower></app-range-upper-lower>
+  <hr class="divider"/>  <!-- Divider -->
+
+  <app-category-dropdown-filter></app-category-dropdown-filter>
+</div>

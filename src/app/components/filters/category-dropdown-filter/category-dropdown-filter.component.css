@@ -1,0 +1,44 @@
+.dropdown{
+    align-items:center ;
+
+}
+
+.dropdown-menu {
+    position: static;
+    will-change: transform;
+}
+
+.Categories {
+    background-color: #f8f9fa; /* Light gray background */
+    border: 1px solid #dee2e6; /* Border around the container */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.form-check {
+    padding-left: 1.25rem; /* Padding to the left of checkbox items */
+}
+
+.form-check-input {
+    margin-top: 0.3rem; /* Adjust checkbox position */
+}
+
+.form-check-label {
+    font-size: 0.875rem; /* Font size of checkbox labels */
+    line-height: 1.5rem; /* Line height of checkbox labels */
+}
+
+.text-center {
+    text-align: center; /* Center the text */
+}
+
+.p-3 {
+    padding: 1rem; /* Padding around the container */
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem; /* Margin below the Categories heading */
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem; /* Margin below each checkbox item */
+}

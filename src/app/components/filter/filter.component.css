@@ -1,0 +1,19 @@
+.filter-container {
+    padding: 20px;
+    background-color: #d1d1d1; /* White background for filter container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  }
+  
+  .filter-header p.h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .divider {
+    border: 0;
+    border-top: 1px solid #454545; /* Light grey divider */
+    margin: 10px 0; /* Space above and below divider */
+  }
+  

@@ -34,6 +34,11 @@ get stock(): string | undefined {
   return (parseFloat(stockStr.trim()) >  0 ) ? 'Available' : 'Not in Stock';
 }
 
+get stockValue(): string | undefined {
+  const stockStr = this.productItem?.extra?.['AGA']?.LGA;
+  return stockStr;
+}
+
 get volume(): number | undefined {
   const volumeStr = this.productItem?.extra?.['AGA']?.VOL;
   return volumeStr ? parseFloat(volumeStr.trim()) : undefined;

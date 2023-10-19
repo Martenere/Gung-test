@@ -27,20 +27,25 @@
             <div class="card-header" id="heading-{{category.id}}">
                 <h5 class="mb-0">
                     <button class="btn btn-link" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + category.id" (click)="logAccordionToggle(category.id)">
-                        {{ category?.name }} -- {{category?.children[0].id.startsWith('s')}}
+                        <i [ngClass]="getAccordionState(category.id) ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+    {{ category?.name }}
                     </button>
-               
                 </h5>
             </div>
             
             <div id="collapse-{{category.id}}" class="collapse show" [attr.data-bs-parent]="'collapse-parent' + category.id"  (shown.bs.collapse)="onShown()" (hidden.bs.collapse)="onHidden()">
                 <div class=" card-body">
-                    
-                    <div [ngClass]="{'product-wrapper': !category?.children[0].id.startsWith('s')}">
-                        <div *ngFor="let child of category?.children">
-                            <ng-container *ngTemplateOutlet="categoryTemplate; context: { $implicit: child, depth: depth+1 }"></ng-container>
+                    <ng-container *ngIf="category?.children && category?.children.length > 0">  
+                        <div [ngClass]="{'product-wrapper': !category?.children[0].id.startsWith('s')}">
+
+                            
+                                <div *ngFor="let child of category?.children">
+                                    <ng-container *ngTemplateOutlet="categoryTemplate; context: { $implicit: child, depth: depth+1 }"></ng-container>
+                                </div>
+                            
+
                         </div>
-                    </div>
+                </ng-container>
                 </div>
             </div>
             

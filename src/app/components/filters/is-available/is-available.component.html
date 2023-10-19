@@ -1,9 +1,6 @@
-<div>
-
-    <label>
-      Available:
-      <input type="checkbox" name="is-available" [(ngModel)]="isAvailable" (change)="applyFilter()"/>
-    </label>
-    
-
-  </div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" name="is-available" id="isAvailableCheck" [(ngModel)]="isAvailable" (change)="applyFilter()">
+  <label class="form-check-label" for="isAvailableCheck">
+    Available
+  </label>
+</div>

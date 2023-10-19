@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="btn-group">
+        <!-- View by Category Button -->
+        <button class="btn btn-primary" (click)="toggleView('category')">
+            <i class="fas fa-tags"></i> View by Category
+        </button>
+
+        <!-- In Stock Button -->
+        <button class="btn btn-primary" (click)="toggleView('sort', 'stock')">
+            <i class="fas fa-check-square"></i> Sort by Stock
+        </button>
+
+        <!-- Volume Button -->
+        <button class="btn btn-primary" (click)="toggleView('sort', 'volume')">
+            <i class="fas fa-chart-bar"></i> Sort by Volume
+        </button>
+        
+        <!-- Volume Range Inputs -->
+
+    </div>
+</div>

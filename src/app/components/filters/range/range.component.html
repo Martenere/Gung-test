@@ -1,0 +1,5 @@
+<div class="container">
+    <input type="range" class="form-range" min="0" max="10000" step="150" [(ngModel)]="rangeValue" (input)="applyFilter()" (change)="applyFilter()">
+    <input type="number" class="form-control" min="0" max="10000" step="150" [(ngModel)]="rangeValue" (input)="applyFilter()" (change)="applyFilter()">
+    <p>Min price : {{ rangeValue }} sek</p>
+</div>

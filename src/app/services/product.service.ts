@@ -20,6 +20,7 @@ export class ProductService {
    * @param id id of the product you want to find information from.
    */
   public getProduct(id: string): Observable<Product> {
+    //if(!this.products[id]){return this.getRandomProduct(id)}
     return of(this.products[id]);
   }
 

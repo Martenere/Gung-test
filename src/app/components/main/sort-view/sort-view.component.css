@@ -1,0 +1,32 @@
+.products{
+    display: flex;
+    flex-wrap: wrap;
+}
+/* Title Styling */
+p.h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Products List Styling */
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Space between product items */
+}
+
+/* No Products Message Styling */
+ng-template#noProducts p {
+    color: #888;
+    font-size: 1rem;
+}
+
+/* Product Item Styling */
+app-product-item {
+    flex: 1 1 calc(33.333% - 1rem); /* Three items per row with gap */
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
