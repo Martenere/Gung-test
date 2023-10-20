@@ -26,6 +26,7 @@ app-sort-header {
 }
 
 .product-view {
+    margin-left: 2rem;
     flex: 1; /* Allows this section to take the remaining space in main-view */
     overflow-y: auto; /* Makes it scrollable when the content overflows */
 }
