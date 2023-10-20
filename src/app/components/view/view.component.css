@@ -3,27 +3,29 @@
     width: 100vw;
     height: 100vh;
     flex-direction: row;
+    overflow: hidden; /* Prevent overflow on the main screen */
 }
 
 .filterpanel {
     width: 15rem;
-    background-color: #ffffff
+    background-color: #ffffff;
+    flex-shrink: 0; /* Prevents the panel from shrinking */
 }
-.main-view{
+
+.main-view {
     flex: 1;
-
-    margin-left: 33px;
+    display: flex;
+    flex-direction: column; /* Convert to column to stack header and view vertically */
+    overflow: hidden; /* To ensure that only the children can scroll */
 }
 
-app-product-view {
-    flex: 1; 
-    height: 100%/* This will make it take up all available space after filterpanel width */
+/* Assuming app-sort-header has a height (e.g., 50px). 
+   Adjust based on your actual height. */
+app-sort-header {
+    height: 50px;
 }
 
-.screen, .filterpanel, app-product-view {
-     /* Or overflow-y: hidden; if you only want to hide vertical overflow */
-}
-
-app-sort-view {
-    margin-left: 3px;
+.product-view {
+    flex: 1; /* Allows this section to take the remaining space in main-view */
+    overflow-y: auto; /* Makes it scrollable when the content overflows */
 }

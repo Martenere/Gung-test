@@ -20,32 +20,25 @@ export class ProductFilterService {
     categories: null
 
   });
-
+ set currentCriteria (criteria: FilterCriteria){ 
+    this._currentCriteria.next(criteria)  
+  }
+  //Not used, but could be used to update filter components if multiple components can adjust the same filter
   private currentCriteria$ = this._currentCriteria.asObservable();
 
-  set currentCriteria (criteria: FilterCriteria){
-    
-    this._currentCriteria.next(criteria)
-   
-  }
 
-
-  
-  
   private  dbInitialCategories?: Category;
   private _cachedProducts = new BehaviorSubject<Product[]>([]);
   cachedProducts$ = this._cachedProducts.asObservable();
 
 
   //Filtered Categories updates whenever a change is made to filterCriteria
+  //SwitchMap aborts processes whenever a change is made to criteria, retrives the product Data whenever a new filter should be applied
+  //Flattens the recursive applyFilter which produces Observables, into a single stream
+  //Filter out empty categories Redundant
   public filteredCategories$: Observable <Category | boolean > = this._currentCriteria.pipe( 
-    //SwitchMap aborts processes whenever a change is made to criteria, retrives the product Data whenever a new filter should be applied
     switchMap(criteria => this.categoryService.getCategories()),
-    //Flattens the recursive applyFilter which produces Observables, into a single stream
-    mergeMap(rootCategory => this.applyFilter(this.dbInitialCategories!, 0)),
-     //flatten the observables
-    
-    //Filter out empty categories Redundant
+    mergeMap(rootCategory => this.applyFilter(this.dbInitialCategories!, 0)),     //flatten the observables
     filter(category => !!category), // filter out the undefined values
 )
 
@@ -56,6 +49,7 @@ export class ProductFilterService {
   constructor(private categoryService: CategoryService, private productService:ProductService) {
     
     //dbInitialCategories is continiously updated with regards to the product databaseState
+    //if categoryService implements a update categories function, the filter will be kept up to date
     this.categoryService.getCategories().subscribe(category => this.dbInitialCategories = category);
 
     //DEBUG
@@ -66,83 +60,79 @@ export class ProductFilterService {
   }
 
 
-  private applyFilter(category :Category, depth:number): Observable<Category | boolean> {
-  
-    
-    
-     // If it's a category...
-    if (category.id.startsWith("s")) { // If it's a category...
-      //console.log(this.extractAllCategories(category))
-      if(depth != 0 && !this.categoryMatchesCriteria(category)){return of().pipe(defaultIfEmpty(false))}
+  private applyFilter(category: Category, depth: number): Observable<Category | boolean> {
+    //Recursively filter the category tree, fetching categoies and products that match criteria
+    //Only gathers Observables, in order to be able to fetch product data if it has not been cached/retrieved previously
+    //NOTE: Observable doesnt emit any value if all products are filtered out currently
+    // Check if the current item is a category
+    if (category.id.startsWith("s")) {
 
-      
-      const childrenObservables: Observable<Category | boolean>[] = category.children.map(child => this.applyFilter(child, depth+1));
-      let children = forkJoin(childrenObservables).pipe(
-          map(filteredChildren => {
-                  // Create a  subCategory with filtered children
-                  const subCategory = {
-                      ...category,
-                      children: filteredChildren.filter(child => child !== false) as Category[] // Removing any null or undefined child categories
-                  };
+        // Skip root category and filter out non-matching subcategories
+        if (depth != 0 && !this.categoryMatchesCriteria(category)) {
+            return of().pipe(defaultIfEmpty(false));
+        }
 
-                  // If the  subCategory has any valid children left after filtering, return it.
-                  // This ensures categories that have subcategories or products get returned.
-                  if (subCategory.children.length > 0) {
+        // Generate observables for child items (be it categories or products)
+        const childrenObservables: Observable<Category | boolean>[] = category.children.map(child => this.applyFilter(child, depth + 1));
+        
+        // Combine results from all child observables
+        //forkjoin joins all children observables, and emits a list of values when they all complete
+        let children = forkJoin(childrenObservables).pipe(
+            map(filteredChildren => {
+                // Reconstruct category with filtered children
+                const subCategory = {
+                    ...category,
+                    children: filteredChildren.filter(child => child !== false) as Category[]
+                };
+
+                // If there are valid child categories or products, return the category
+                if (subCategory.children.length > 0) {
                     return subCategory;
                 }
-                if (subCategory.children.length == 0) {
-                  return false;
-              }
-                  // If the category does not have valid children but matches the criteria, return it.
-                  if (this.categoryMatchesCriteria(subCategory)) {
-                      return subCategory;
-                  }
 
-                  // If the category does not match the criteria and has no valid children, return null.
-                  return false ;
-              }),
-          //filter(cat => !!cat),
-          defaultIfEmpty(false)
-          
-      );
+                // If the category matches the filter criteria, return it
+                if (this.categoryMatchesCriteria(subCategory)) {
+                    return subCategory;
+                }
 
-      return children.pipe( defaultIfEmpty(false))
+                // If not, return false to filter it out
+                return false;
+            }),
+            defaultIfEmpty(false)
+        );
+
+        return children.pipe(defaultIfEmpty(false));
+        
+    } else {
+        // If the current item is a product, apply the product filter
+        return this.applyFilterProduct(category).pipe(defaultIfEmpty(false));
     }
-     else 
-     { // If it's a product...
-    return this.applyFilterProduct(category).pipe(defaultIfEmpty(false));
-  }
-  }
+}
+
 
 
 
 
 
   private applyFilterProduct(category: Category): Observable<Category | boolean> {
-     // Check if the product is already cached
-     const cachedProduct = this._cachedProducts.getValue().find(product => product.id === category.id);
+
+    //Search cache for product data, if it doesnt exist, fetch it
+    //filter out product with productMatchesCriteria()
+    const cachedProducts = this._cachedProducts.getValue();
+    const cachedProduct = cachedProducts.find(product => product.id === category.id);
     
     if (cachedProduct) {      
-        // If the product is found in cache, check if it matches the criteria and return the category
-        if (this.productMatchesCriteria(cachedProduct)) {
-            return of(category);
-        } else {
-            return of().pipe(defaultIfEmpty(false));
-        }
+        return this.productMatchesCriteria(cachedProduct) ? of(category) : of(false);
     } else {
-        // If the product is not found in cache, make a request to the server
-        return this.productService.getProduct(category.id).pipe(
-            switchMap(product => {
-                // Store the retrieved product in the cache
-                const updatedCache = [...this._cachedProducts.getValue(), product];
-                this._cachedProducts.next(updatedCache);
 
-                // Check if the product matches the criteria and return the category
-                if (this.productMatchesCriteria(product)) {
-                    return of(category);
-                } else {
-                    return of().pipe(defaultIfEmpty(false));
-                }
+        //if the data for the products isnt cached, get it from productService
+        return this.productService.getProduct(category.id).pipe(
+            tap(product => {
+                // Store the retrieved product in the cache when retrieved
+                this._cachedProducts.next([...cachedProducts, product]);
+            }),
+            switchMap(product => {
+                return this.productMatchesCriteria(product) ? of(category) : of(false);
             })
         );
     }
@@ -151,6 +141,7 @@ export class ProductFilterService {
 
 
 extractAllCategories(category?: Category): string[] {
+  //Recursively exract all category and subcategory names into a single string List
   if(!category){category=this.dbInitialCategories!}
   if (!category.id.startsWith("s")) { return []; }
 
@@ -195,9 +186,7 @@ private categoryMatchesCriteria(category: Category): boolean {
 
     // Check minPrice
     if (criteria.minPrice) {
-
         const productPrice = product.extra?.['AGA'].PRI
-
         if (productPrice < criteria.minPrice) {
             return false;
         }
@@ -205,9 +194,7 @@ private categoryMatchesCriteria(category: Category): boolean {
 
     // Check availability
     if (criteria.isAvailable) {
-
         const productAvailable = product.extra?.['AGA']?.LGA > 0;
-        
         if (productAvailable !== criteria.isAvailable) {
             return false;
         }
@@ -240,7 +227,7 @@ private categoryMatchesCriteria(category: Category): boolean {
 
 
 
-
+//Criteria updater and setters of each criteria
 private updateCriteria<K extends keyof FilterCriteria>(key: K, value: FilterCriteria[K]): void {
   let currentCriteria: FilterCriteria = this._currentCriteria.getValue();
   this._currentCriteria.next({ ...currentCriteria, [key]: value });

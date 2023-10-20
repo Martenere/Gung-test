@@ -4,7 +4,9 @@
     </div>
     <div class="main-view">
         <app-sort-header></app-sort-header>
-        <app-sort-view *ngIf="viewMode === 'sort'" ></app-sort-view>
-        <app-category-view *ngIf="viewMode === 'category'"></app-category-view>
+        <div class="product-view">
+            <app-sort-view *ngIf="viewMode === 'sort'" ></app-sort-view>
+            <app-category-view *ngIf="viewMode === 'category'"></app-category-view>
+        </div>
     </div>
 </div>

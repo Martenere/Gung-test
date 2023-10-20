@@ -17,6 +17,7 @@
     max-width: 14rem; /* Set maximum width instead of fixed width */
     box-shadow: 0 12px 22px rgba(0,0,0,0.6);
     border-radius: 10px;
+    
 }
 
 .products{
@@ -46,10 +47,8 @@ ng-template#noProducts p {
 /* Product Item Styling */
 app-product-item {
     margin: 0 auto;
-
-    flex: 1 1 calc(33.333% - 1rem); /* Three items per row with gap */
+    flex: 1 ; /* Three items per row with gap */
     background-color: #fff;
-    padding: 3rem;
+    padding: 0rem;
     border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
