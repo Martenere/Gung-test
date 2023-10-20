@@ -1,17 +1,22 @@
-<div class="card" style="width: 18rem; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-  
-  <div class="card-body">
-      <h5 class="card-title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">{{categoryItem.name}}</h5>
+<div class="card" style="width: 14rem; border-radius: 10px; box-shadow: 0 12px 22px rgba(0,0,0,0.6);">
+
+    <div class="card-body">
+      <h5 class="card-title" style="font-size: 1.25rem; margin-bottom: 0.25rem;">{{categoryItem.name}}</h5>
       <small class="text-muted">ID: {{categoryItem.id}}</small>
-      <p class="card-text" style="margin-top: 0.5rem;">
-          Price: <span style="font-weight: bold;">{{price}} $</span>
+      <p class="card-text" style="margin-top: 0.25rem; font-size: 0.875rem;">
+        Price: <span style="font-weight: bold;">{{price}} $</span>
       </p>
-      <p class="card-text">
-          Stock: <span style="font-weight: bold;">{{stock}}</span> | Stock Value: <span style="font-weight: bold;">{{stockValue}}</span>
+      <p class="card-text stock" style="font-size: 0.875rem;">
+        Stock: <span style="font-weight: bold;">{{stock}}</span>
+       
+      </p> <small class="text-muted"> Stock value: <span style="font-weight: bold;">{{stockValue}}</span></small>
+      <p class="card-text" style="font-size: 0.875rem;">
+        Volume: <span style="font-weight: bold;">{{volume}}</span>
       </p>
-      <p class="card-text">
-          Volume: <span style="font-weight: bold;">{{volume}}</span>
-      </p>
-      <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Go somewhere</a>
+      <a href="#" class="btn btn-primary" [class.disabled]="+stockValue! <= 0" style="margin-top: 0.5rem; padding: 5px 10px; font-size: 0.875rem;">
+        {{ +stockValue! > 0 ? 'Add to Cart' : 'Out of Stock' }}
+      </a>
+      
+    </div>
   </div>
-</div>
+  

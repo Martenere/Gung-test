@@ -1,18 +1,15 @@
-
-
 <div class="container">
-  <p>Volume:</p>
-    <div class="row">
-      <div class="col">
-        <p>Lower</p>
-        <input type="range" class="form-range" min="0" max="10" step=".1" [(ngModel)]="lowerValue" (input)="onInputChange($event, 'lower')" />
-        <input type="number" class="form-control" [(ngModel)]="lowerValue" (input)="onInputChange($event, 'lower')" />
+  <p>Volume range:</p>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <input type="range" class="form-range dual-range" min="0" max="10" step=".1" [(ngModel)]="lowerValue" (input)="onInputChange($event, 'lower')" style="--min: 0; --max: {{ upperValue }};" />
+        <input type="range" class="form-range dual-range" min="0" max="10" step=".1" [(ngModel)]="upperValue" (input)="onInputChange($event, 'upper')" style="--min: {{ lowerValue }}; --max: 10;" />
       </div>
-      <div class="col">
-        <p>Upper</p>
-        <input type="range" class="form-range" min="0" max="10" step=".1"[(ngModel)]="upperValue" (input)="onInputChange($event, 'upper')" />
-        <input type="number" class="form-control" [(ngModel)]="upperValue" (input)="onInputChange($event, 'upper')" />
+      <div class="d-flex justify-content-between">
+        <input type="number" class="form-control" [(ngModel)]="lowerValue" (input)="onInputChange($event, 'lower')" style="width: 48%;" />
+        <input type="number" class="form-control" [(ngModel)]="upperValue" (input)="onInputChange($event, 'upper')" style="width: 48%;" />
       </div>
     </div>
   </div>
-  
+</div>

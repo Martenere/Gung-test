@@ -16,7 +16,7 @@ export class SortViewComponent {
   sortProperty? : "stock" | "volume"
   categories?: Category | boolean
   products: Category[] = [];
-
+  sortAscending: boolean = true;
   productData$?: Product[];
 
   constructor(private productFilterService: ProductFilterService, private viewToggleService:ViewToggleService){}
@@ -37,7 +37,10 @@ export class SortViewComponent {
       this.productData$ = products);
       this.sortProducts()
   }
-
+  toggleSortOrder() {
+    this.sortAscending = !this.sortAscending;
+    this.sortProducts();  // Re-sort products after toggling order
+  }
   sortProducts() {
 
 
@@ -82,10 +85,13 @@ export class SortViewComponent {
         
         // Perform the actual comparison, ensuring values are defined, else returning 0 (no change)
         if (sortValueA !== undefined && sortValueB !== undefined) {
+
+          const orderMultiplier = this.sortAscending ? 1 : -1;
+
           if (sortValueA > sortValueB) {
-            return -1;  // Return 1 to indicate a should come after b
+            return -orderMultiplier;  // Return 1 to indicate a should come after b
           } else if (sortValueA < sortValueB) {
-            return 1;  // Return -1 to indicate a should come before b
+            return orderMultiplier;  // Return -1 to indicate a should come before b
           }
         }
         return 0;  // Return 0 to indicate no difference (i.e., don't change order)
@@ -96,6 +102,13 @@ export class SortViewComponent {
     console.log('After Sorting:', this.products);
   };
 
+
+
+
+  capitalizeFirstLetter(s: string): string {
+    if (!s) return s;  // returns the original value if it's null, undefined, or an empty string
+    return s[0].toUpperCase() + s.slice(1);
+}
 
 
 

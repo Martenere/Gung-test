@@ -8,3 +8,27 @@
 .button {
     margin-left: 2rem;
 }
+/* ... existing CSS ... */
+
+.btn-outline-primary {
+    color: #333; /* Match text color to filter header */
+    border-color: #333; /* Match border color to text color */
+    transition: background-color 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #d1d1d1; /* Match hover background color to filter container background */
+    border-color: #333;
+}
+
+
+
+.btn-group .btn {
+    border-radius: 0; /* Optional: to remove rounded corners */
+}
+
+.btn.active {
+    background-color: #d1d1d1; /* Match active background color to filter container background */
+    border-color: #333;
+    color: #333;
+}

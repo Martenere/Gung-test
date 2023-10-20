@@ -7,10 +7,12 @@
 
 .filterpanel {
     width: 15rem;
-    background-color: #CFCABF
+    background-color: #ffffff
 }
 .main-view{
     flex: 1;
+
+    margin-left: 33px;
 }
 
 app-product-view {
@@ -20,4 +22,8 @@ app-product-view {
 
 .screen, .filterpanel, app-product-view {
      /* Or overflow-y: hidden; if you only want to hide vertical overflow */
+}
+
+app-sort-view {
+    margin-left: 3px;
 }

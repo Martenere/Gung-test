@@ -1,11 +1,13 @@
+<div class="header-of-sort">
+    <p class="h1">Products sorted by: <b>{{capitalizeFirstLetter(sortProperty!)}}</b></p><button class="btn btn-secondary" (click)="toggleSortOrder()">
+        {{ sortAscending ? 'Sort: Large to Small' : 'Sort: Small to Large' }}
+    </button>
+</div>
+    <div class="products d-flex flex-wrap justify-content-center" *ngIf="products && products.length > 0; else noProducts">
+        <app-product-item *ngFor="let product of products" [categoryItem]="product"></app-product-item>
+    </div>
 
-<p class="h1">{{sortProperty}}</p>
-
-<div class="products" *ngIf="products && products.length > 0; else noProducts">
-    <app-product-item *ngFor="let product of products" [categoryItem]="product"></app-product-item>
-  </div>
-  
-  <ng-template #noProducts>
+<ng-template #noProducts>
     <p>No products available</p>
-  </ng-template>
-  
+</ng-template>
+ 
